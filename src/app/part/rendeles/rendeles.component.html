@@ -1,0 +1,31 @@
+<div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Megrendelés</h5>
+  
+      <div class="form-floating mb-3">
+        <input [(ngModel)]="nev" name="name" type="text" class="form-control" id="name">
+        <label for="name">Név</label>
+      </div>
+  
+      <div class="form-floating mb-3">
+        <input [(ngModel)]="cim" name="cim" type="text" class="form-control" id="cim">
+        <label for="cim">Cím</label>
+      </div>
+  
+      <div *ngIf="kosar && novenyek" role="alert">
+        <div style="text-align: center; align-items: center;" *ngFor="let tetel of kosar" class="row">
+          <div class="col">{{ nevKereses(tetel.key)}}</div>
+          <div class="col">
+            <input [(ngModel)]="tetel.db" type="number" class="form-control" [placeholder]="tetel.db" aria-describedby="basic-addon1">
+          </div>
+          <div class="col">{{tetel.ar*tetel.db}} Ft</div>
+          <div class="col">
+            <button style="margin-right: 10px;" (click)="updateNoveny(tetel.key, tetel.db)" type="button" class="btn btn-warning">Módosít</button>
+            <button (click)="tetelTorol(tetel.key)" type="button" class="btn btn-primary">Törlés</button>
+          </div>
+        </div>
+      </div>
+      <p>Összesen: {{osszesen}} Ft</p>
+      <button (click)="megrendelesLeadas()" type="button" class="btn btn-primary">Megrendel</button>
+    </div>
+  </div>
