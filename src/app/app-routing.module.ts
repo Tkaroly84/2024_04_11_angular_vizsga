@@ -11,7 +11,7 @@ const routes: Routes = [
   
   
   {path:"", component:RolunkComponent},
-  {path:"* *", component:RolunkComponent}
+  {path:"**", component:RolunkComponent}
 ];
 
 @NgModule({
