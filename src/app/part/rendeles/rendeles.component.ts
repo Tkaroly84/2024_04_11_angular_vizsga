@@ -19,7 +19,10 @@ export class RendelesComponent {
   constructor(private kosarService: KosarService, private base: BaseService, private router: Router) {
 
     this.kosarService.getKosar().subscribe(
-      (res) => this.kosar = res
+      (res) => {
+        this.kosar = res;
+        this.osszesen = this.kosar.reduce((acc: number, curr: any) => acc + (curr.ar * curr.db), 0);
+      }
     )
     this.base.getPlants().snapshotChanges().pipe(
       map(
@@ -61,10 +64,11 @@ export class RendelesComponent {
     )
   }
   updateNoveny(key: any, body: any) {
-    this.base.updateNoveny(key, body).then(
-      () => console.log('sikeres update')
-    ).catch(
-      () => console.log('hiba történt')
-    )
-  }
-}
+    this.base.updateNoveny(key, body).then(() => {
+      console.log('Sikeres update');
+      // Frissítjük az összesen értékét a kosár új állapota alapján
+      this.osszesen = this.kosar.reduce((acc: number, curr: any) => acc + (curr.ar * curr.db), 0);
+    }).catch(() => {
+      console.log('Hiba történt');
+    });
+  }}
